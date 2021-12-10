@@ -1,0 +1,10 @@
+
+Nomex Blankets - Han Zhang, Cameron Nelson, Kevin Cao
+SoftDev
+P01: ArRESTed Development
+2021-12-09
+
+kevinC -- 2021-12-09 22:35
+
+Added new iteration of design doc with better formatting/order and added more details to api section and made database tables more clear.
+Created a few html pages with inheritance
