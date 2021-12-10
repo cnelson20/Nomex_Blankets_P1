@@ -1,9 +1,22 @@
-from flask import Flask, render_template, request, session
-import urllib3, json, os, sqlite3
+from flask import Flask, render_template, redirect, request, session
+import urllib3
+import json
+import os
+import sqlite3
+import requests
 
 app = Flask(__name__)
-app.secret_key = os.urandom(32);
+app.secret_key = os.urandom(32)
 http = urllib3.PoolManager()
+r = http.request(
+    'GET', 'https://api.nasa.gov/planetary/apod?api_key=PxL3Eff2wvlbpZ9B6gF6Z1ORyovxbYCMdarvELIz')
+data = json.loads(r.data.decode('utf-8'))
+image_url = data["hdurl"]
+
+r = requests.get(image_url)
+with open("static/images/APOD.jpg", "wb") as f:
+    f.write(r.content)
+
 
 MAIN_DB = "users.db"
 
@@ -23,11 +36,14 @@ CREATE TABLE IF NOT EXISTS USERS (
 db.commit()
 db.close()
 
+
 @app.route("/")
 def index():
-    return render_template("index.html");
+    return render_template("index.html")
 
 # Signup function
+
+
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
     """
@@ -59,15 +75,17 @@ def signup():
                 # Checking for illegal characters in password
                 if ' ' in list(password) or '\\' in list(password):
                     db.close()
-                    return render_template("login.html",action="/signup", name="Sign Up", error="Passwords cannot contain spaces or backslashes.")
+                    return render_template("login.html", action="/signup", name="Sign Up", error="Passwords cannot contain spaces or backslashes.")
                 password = str(password)
                 # Checking to see if password follows proper length
                 if len(password) > 7 and len(password) <= 50:
-                    r = http.request('GET',"http://dog.ceo/api/breeds/image/random");
-                    pfpurl = "";
+                    r = http.request(
+                        'GET', "http://dog.ceo/api/breeds/image/random")
+                    pfpurl = ""
                     if r.status == 200:
-                        pfp = json.loads(r.data).get('message');
-                    c.execute("""INSERT INTO USERS (USERNAME,HASH,PFP) VALUES (?,?)""",(request.form['username'], password,pfpurl,));
+                        pfp = json.loads(r.data).get('message')
+                    c.execute("""INSERT INTO USERS (USERNAME,HASH,PFP) VALUES (?,?)""",
+                              (request.form['username'], password, pfpurl,))
                     db.commit()
                     c.execute(
                         """SELECT USERNAME FROM USERS WHERE USERNAME = ?;""", (request.form['username'],))
@@ -87,6 +105,7 @@ def signup():
             return render_template("login.html", action="/signup", name="Sign Up", error="Some error occurred. Please try signing up again.")
     else:
         return render_template("login.html", action="/signup", name="Sign Up")
+
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -118,6 +137,8 @@ def login():
         return render_template("login.html", action="/login", name="Login")
 
 # Logout function
+
+
 @app.route("/logout")
 def logout():
     """ 
@@ -127,7 +148,6 @@ def logout():
     return redirect("/")
 
 
-
 if __name__ == "__main__":
-    app.debug = True;
+    app.debug = True
     app.run()

@@ -12,3 +12,8 @@ kevinC -- 2021-12-10 09:15
 
 Updated layout with sample navbar and footer.
 Centered login form.
+
+kevinC -- 2021-12-10 12:31
+
+Added APOD as background image.
+Added signup page.
