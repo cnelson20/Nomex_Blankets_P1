@@ -25,7 +25,7 @@ db.close()
 
 @app.route("/")
 def index():
-    return "";
+    return render_template("index.html");
 
 # Signup function
 @app.route("/signup", methods=['GET', 'POST'])
