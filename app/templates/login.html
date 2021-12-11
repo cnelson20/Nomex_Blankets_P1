@@ -7,22 +7,29 @@
 {% block content %}
 <main class="form-signin">
   <form method="POST" action="{{ action }}">
-    <h1 class="h3 mb-3 fw-normal">Please {{ name }}</h1>
-
+	{% if error %}
+		<h1 class="h3 mb-3 fw-normal text-danger">{{ error }}</h1>
+	{% else %}
+		{% if success %} 
+			<h1 class="h3 mb-3 fw-normal text-success"> {{ error }}</h1>
+		{% endif %}
+		<h1 class="h3 mb-3 fw-normal">Please {{ name }}</h1>
+	{% endif %}
     <div class="form-floating">
       <input
-        type="email"
         class="form-control"
         id="floatingInput"
-        placeholder="name@example.com"
+		name="username"
+        placeholder="Username"
       />
-      <label for="floatingInput">Email address</label>
+      <label for="floatingInput"> Username </label>
     </div>
     <div class="form-floating">
       <input
         type="password"
         class="form-control"
         id="floatingPassword"
+		name="password"
         placeholder="Password"
       />
       <label for="floatingPassword">Password</label>
