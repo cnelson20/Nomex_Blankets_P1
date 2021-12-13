@@ -17,3 +17,8 @@ kevinC -- 2021-12-10 12:31
 
 Added APOD as background image.
 Added signup page.
+
+cameronN -- 2021-12-11 18:31
+
+Changed login to use a username
+imported code for error displaying
