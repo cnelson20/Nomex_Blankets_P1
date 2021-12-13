@@ -44,20 +44,19 @@ def isAlphaNum(string):
             return False
     return True
 
+
 # Home page
-
-
 @app.route("/")
 def index():
     return render_template("index.html")
 
 
-
 # Play
 @app.route("/play")
 def play():
-    return render_template("play.html");
-    
+    return render_template("play.html")
+
+
 # Signup function
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
@@ -162,11 +161,6 @@ def logout():
     """
     session.pop('username', default=None)
     return redirect("/")
-
-
-@app.route("/play")
-def play():
-    return render_template("checkers.html")
 
 
 if __name__ == "__main__":
