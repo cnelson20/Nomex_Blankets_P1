@@ -44,9 +44,14 @@ def isAlphaNum(string):
 def index():
     return render_template("index.html")
 
+
+
+# Play
+@app.route("/play")
+def play():
+    return render_template("play.html");
+    
 # Signup function
-
-
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
     """
