@@ -22,3 +22,9 @@ cameronN -- 2021-12-11 18:31
 
 Changed login to use a username
 imported code for error displaying
+
+kevinC -- 2021-12-13 12:45
+
+Added /play route
+Moved APOD to /play only
+Added checkerboard pattern to /play
