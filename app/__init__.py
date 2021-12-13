@@ -1,14 +1,19 @@
 from flask import Flask, render_template, redirect, request, session
-import urllib3, json, os, sqlite3
+import urllib3
+import json
+import os
+import sqlite3
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
+
+# get APOD
 http = urllib3.PoolManager()
 r = http.request(
     'GET', 'https://api.nasa.gov/planetary/apod?api_key=PxL3Eff2wvlbpZ9B6gF6Z1ORyovxbYCMdarvELIz')
-imgurl = json.loads(r.data.decode('utf-8')).get("hdurl");
-i = open("static/images/APOD.jpg","wb");
-i.write(http.request('GET',imgurl).data);
+imgurl = json.loads(r.data.decode('utf-8')).get("hdurl")
+i = open("static/images/APOD.jpg", "wb")
+i.write(http.request('GET', imgurl).data)
 
 MAIN_DB = "users.db"
 
@@ -36,10 +41,12 @@ def isAlphaNum(string):
     for char in string:
         o = ord(char)
         if not ((0x41 <= o <= 0x5A) or (0x61 <= o <= 0x7A) or (0x30 <= o <= 0x39)):
-            return False;
-    return True;
+            return False
+    return True
 
 # Home page
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -55,7 +62,7 @@ def signup():
     """
     # Obtaining query from html form
     if request.method == "POST":
-        print(request.form['username'] + " - " + request.form['password']);
+        print(request.form['username'] + " - " + request.form['password'])
         # Checking if required values in query exist using key values
         if 'username' in request.form and 'password' in request.form:
             db = sqlite3.connect(MAIN_DB)
@@ -83,7 +90,8 @@ def signup():
                 password = str(password)
                 # Checking to see if password follows proper length
                 if len(password) > 7 and len(password) <= 50:
-                    r = http.request('GET', "http://dog.ceo/api/breeds/image/random")
+                    r = http.request(
+                        'GET', "http://dog.ceo/api/breeds/image/random")
                     pfpurl = ""
                     if r.status == 200:
                         pfpurl = json.loads(r.data).get('message')
@@ -149,6 +157,11 @@ def logout():
     """
     session.pop('username', default=None)
     return redirect("/")
+
+
+@app.route("/play")
+def play():
+    return render_template("checkers.html")
 
 
 if __name__ == "__main__":
