@@ -1,7 +1,26 @@
 body {
-  background-image: url("/static/images/checkerboard.png"),
-    url("/static/images/APOD.jpg");
+  background-image: url("/static/images/APOD.jpg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 40%, cover;
+  background-size: cover;
+  align-items: center;
+}
+
+table {
+  width: 800px;
+}
+
+td {
+  height: 100px;
+}
+
+
+tr:nth-child(even) td:nth-child(even),
+tr:nth-child(odd) td:nth-child(odd){
+  background: rgba(0, 0, 0, 0.5);
+}
+
+tr:nth-child(even) td:nth-child(odd),
+tr:nth-child(odd) td:nth-child(even){
+  background: rgba(255, 0, 0, 0.5);
 }

@@ -5,4 +5,14 @@
   <link href="/static/css/checkers.css" rel="stylesheet">
 {% endblock %}
 {% block content %}
-{% endblock %}
+  <table>
+    {% for i in range (8) %}
+      <tr>
+        {% for j in range(8) %}
+          <td>Fill</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}W
+

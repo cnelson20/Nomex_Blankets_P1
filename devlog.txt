@@ -29,6 +29,11 @@ Added /play route
 Moved APOD to /play only
 Added checkerboard pattern to /play
 
+kevinC, hanZ -- 2021-12-14 09:11
+
+Revamped checkerboard pattern from image to a table
+
 cameronN -- 2021-12-14 9:25
 
 Started writing checkers functions (to actually play)
+
