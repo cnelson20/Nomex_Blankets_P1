@@ -3,6 +3,7 @@ import urllib3
 import json
 import os
 import sqlite3
+import checkers
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
