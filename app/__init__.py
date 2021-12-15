@@ -153,8 +153,6 @@ def login():
         return render_template("login.html", action="/login", name="Login")
 
 # Logout function
-
-
 @app.route("/logout")
 def logout():
     """ 
@@ -163,6 +161,13 @@ def logout():
     session.pop('username', default=None)
     return redirect("/")
 
+# Profile function
+@app.route("/profile")
+def profile():
+    if 'username' in session:
+        return render_template("profile.html", user = session['username'])
+    else:
+        return redirect("/login")
 
 if __name__ == "__main__":
     app.debug = True

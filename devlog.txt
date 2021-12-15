@@ -37,3 +37,6 @@ cameronN -- 2021-12-14 9:25
 
 Started writing checkers functions (to actually play)
 
+hanZ -- 2021-12-15 8:49
+
+Added launch codes to README
