@@ -144,7 +144,7 @@ def login():
             else:
                 if hashed[0] == request.form['password']:
                     session['username'] = request.form['username']
-                    return render_template("index.html", message="Logged in!")
+                    return redirect('/')
                 else:
                     return render_template("login.html", name="Login", action="/login", error="Password is incorrect")
         else:
