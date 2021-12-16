@@ -49,3 +49,7 @@ Created blank profile page
 cameronN -- 2021-12-15 22:10
 
 Made DB tables and keys lowercase (try to increase clarity)
+
+kevinC -- 2021-12-16 09:22
+
+Make navbar show correct items on every page

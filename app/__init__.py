@@ -49,13 +49,13 @@ def isAlphaNum(string):
 # Home page
 @app.route("/")
 def index():
-    return render_template("index.html", user=session.get('username'))
+    return render_template("index.html", user=session['username'])
 
 
 # Play
 @app.route("/play")
 def play():
-    return render_template("play.html")
+    return render_template("play.html", user=session['username'])
 
 
 # Signup function
@@ -82,11 +82,11 @@ def signup():
                 # Check to see if user follows formatting
                 if isAlphaNum(username.decode('utf-8')) == None:
                     db.close()
-                    return render_template("login.html", user=session.get('username'), action="/signup", name="Sign Up", error="Username can only contain alphanumeric characters.")
+                    return render_template("login.html", user=session['username'], action="/signup", name="Sign Up", error="Username can only contain alphanumeric characters.")
                 # Check to see if username is of proper length
                 if len(username) < 5 or len(username) > 15:
                     db.close()
-                    return render_template("login.html", user=session.get('username'), action="/signup", name="Sign Up", error="Usernames must be between 5 and 15 characters long")
+                    return render_template("login.html", user=session['username'], action="/signup", name="Sign Up", error="Usernames must be between 5 and 15 characters long")
                 password = request.form['password']
                 # Checking for illegal characters in password
                 if ' ' in list(password) or '\\' in list(password):
@@ -131,7 +131,7 @@ def login():
     """
     if request.method == "POST":
         if 'username' in session:
-            return render_template("index.html", user=session.get('username'), message="Already logged in!")
+            return render_template("index.html", user=session['username'], message="Already logged in!")
         if 'username' in request.form and 'password' in request.form:
             db = sqlite3.connect(MAIN_DB)
             c = db.cursor()
@@ -153,6 +153,8 @@ def login():
         return render_template("login.html", action="/login", name="Login")
 
 # Logout function
+
+
 @app.route("/logout")
 def logout():
     """ 
@@ -162,12 +164,15 @@ def logout():
     return redirect("/")
 
 # Profile function
+
+
 @app.route("/profile")
 def profile():
     if 'username' in session:
-        return render_template("profile.html", user = session['username'])
+        return render_template("profile.html", user=session['username'])
     else:
         return redirect("/login")
+
 
 if __name__ == "__main__":
     app.debug = True
