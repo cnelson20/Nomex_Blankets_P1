@@ -22,18 +22,18 @@ $ git clone git@github.com:hzhangg20/Nomex_Blankets_P1.git
 ```
 $ python3 -m venv venv
 
-$ source venv (for Linux)
-$ source venv (for Windows)
+$ source venv/bin/activate
 ```
 
-### 3. Install dependencies:
+### 3. Navigate to directory and install dependencies:
 ```
+(venv)$ cd Nomex_Blankets_P1
 (venv)$ pip install -r requirements.txt  
 ```
 
 ### 4. Navigate to the directory and run:
 ```
-(venv)$ cd Nomex_Blankets_P1/app
+(venv)$ cd app
 (venv)$ python3 __init__.py
 ```
 
