@@ -45,3 +45,7 @@ kevinC -- 2021-12-15 09:15
 
 Make navbar change dynamically based on session login
 Created blank profile page
+
+cameronN -- 2021-12-15 22:10
+
+Made DB tables and keys lowercase (try to increase clarity)
