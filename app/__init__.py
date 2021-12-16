@@ -49,7 +49,7 @@ def isAlphaNum(string):
 # Home page
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", user=session.get('username'))
 
 
 # Play
@@ -144,7 +144,7 @@ def login():
             else:
                 if hashed[0] == request.form['password']:
                     session['username'] = request.form['username']
-                    return render_template("index.html", message="Logged in!")
+                    return redirect('/')
                 else:
                     return render_template("login.html", name="Login", action="/login", error="Password is incorrect")
         else:
@@ -153,8 +153,6 @@ def login():
         return render_template("login.html", action="/login", name="Login")
 
 # Logout function
-
-
 @app.route("/logout")
 def logout():
     """ 
@@ -163,6 +161,13 @@ def logout():
     session.pop('username', default=None)
     return redirect("/")
 
+# Profile function
+@app.route("/profile")
+def profile():
+    if 'username' in session:
+        return render_template("profile.html", user = session['username'])
+    else:
+        return redirect("/login")
 
 if __name__ == "__main__":
     app.debug = True

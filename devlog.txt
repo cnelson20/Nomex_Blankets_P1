@@ -37,3 +37,11 @@ cameronN -- 2021-12-14 9:25
 
 Started writing checkers functions (to actually play)
 
+hanZ -- 2021-12-15 8:49
+
+Added launch codes to README
+
+kevinC -- 2021-12-15 09:15
+
+Make navbar change dynamically based on session login
+Created blank profile page
