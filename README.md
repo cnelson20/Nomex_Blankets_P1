@@ -22,8 +22,7 @@ $ git clone git@github.com:hzhangg20/Nomex_Blankets_P1.git
 ```
 $ python3 -m venv venv
 
-$ source venv (for Linux)
-$ source venv (for Windows)
+$ source venv/bin/activate
 ```
 
 ### 3. Install dependencies:
