@@ -24,11 +24,11 @@ c = db.cursor()
 
 # table creation
 c.execute("""
-CREATE TABLE IF NOT EXISTS USERS (
+CREATE TABLE IF NOT EXISTS users (
     ROWID       INTEGER PRIMARY KEY,
-    USERNAME    TEXT    NOT NULL,
-    HASH        TEXT    NOT NULL,
-    PFP         TEXT   
+    username    TEXT    NOT NULL,
+    hash        TEXT    NOT NULL,
+    pfp         TEXT   
 );""")
 
 db.commit()
@@ -73,7 +73,7 @@ def signup():
             db = sqlite3.connect(MAIN_DB)
             c = db.cursor()
             # Obtaining data from database
-            c.execute("""SELECT USERNAME FROM USERS WHERE USERNAME = ?;""",
+            c.execute("""SELECT username FROM users WHERE username = ?;""",
                       (request.form['username'],))
             exists = c.fetchone()
             # Checking to see if the username that the person signing up gave has not been made
@@ -100,11 +100,11 @@ def signup():
                     pfpurl = ""
                     if r.status == 200:
                         pfpurl = json.loads(r.data).get('message')
-                    c.execute("""INSERT INTO USERS (USERNAME,HASH,PFP) VALUES (?,?,?)""",
+                    c.execute("""INSERT INTO users (username,hash,pfp) VALUES (?,?,?)""",
                               (request.form['username'], password, pfpurl,))
                     db.commit()
                     c.execute(
-                        """SELECT USERNAME FROM USERS WHERE USERNAME = ?;""", (request.form['username'],))
+                        """SELECT username FROM users WHERE username = ?;""", (request.form['username'],))
                     exists = c.fetchone()
                     db.close()
                     if (exists != None):
@@ -135,7 +135,7 @@ def login():
         if 'username' in request.form and 'password' in request.form:
             db = sqlite3.connect(MAIN_DB)
             c = db.cursor()
-            c.execute("""SELECT HASH FROM USERS WHERE USERNAME = ?;""",
+            c.execute("""SELECT hash FROM users WHERE username = ?;""",
                       (request.form['username'],))
             hashed = c.fetchone()  # [0]
             db.close()

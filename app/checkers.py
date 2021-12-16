@@ -13,7 +13,7 @@ def gen_list(iterable_thing):
         
 def generate_board():
     board = list();
-    basic = [1,0,1,0,1,0,1,0];
+    basic = [0,1,0,1,0,1,0,1];
     clear = [0,0,0,0,0,0,0,0];
     for i in range(8):
         board.append(clear);
@@ -27,21 +27,53 @@ def generate_board():
 
     return board;
 
-games_dict = dict();
+time_dict = dict();
 
-def new_game(user):
-    if user in games_dict:
+def start_game():
+    if (not 'username' in session) or user in games_dict:
         return false;
     else:
-        games_dict[user] = generate_board();
+        session['game'] = dict();
+        session['game']['board'] = generate_board();
+        session['game']['turn'] = 1;
+        # generate emojis
         return true;
 
-def move(user,x1,y1,x2,y2):
-    if user in games_dict:
+def remove_game():
+    ''' 
+       delete a game 
+    '''
+    if 'game' in session:
+        del session['game'];
+        return true
+    return false
+
+def game_exists():
+    return 'game' in session;
+
+def move(oldx,oldy,movex,movey):
+    '''
+       move piece 
+    '''
+    if 'game' in session:
+        print(session['game']);
+        game_turn = session['game']['turn'];
+        board = session['game']['board'];
+        doublehop = False;
+        
+        if (board[oldy][oldx] != 0 and board[oldy][oldx] % 2 == game_turn):
+            ''' correct player continue checking things '''
+            if (board[movey][movex] != 0 and board[movey][movex] % 2 == game_turn):
+                return false # if spot to move to is own team fail.
+        else:
+            return false
+        
+        if (not doublehop):
+            user_game['turn'] = (game_turn % 2) + 1;
         return true
     else:
-        return false
-    
+        return false  
 
+    
 if __name__ == "__main__":
     print(*generate_board(),sep='\n');
