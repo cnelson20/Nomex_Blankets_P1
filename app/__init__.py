@@ -1,7 +1,10 @@
 from flask import Flask, render_template, redirect, request, session
-import json, os, urllib3, sqlite3
-import time 
-import checkers # another file 
+import json
+import os
+import urllib3
+import sqlite3
+import time
+import checkers  # another file
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
@@ -10,7 +13,7 @@ app.secret_key = os.urandom(32)
 http = urllib3.PoolManager()
 if (not os.path.exists("static/images/APOD.jpg")) or int(os.path.getmtime("static/images/APOD.jpg") / 86400) < int(time.time() / 86400):
     r = http.request(
-    'GET', 'https://api.nasa.gov/planetary/apod?api_key=PxL3Eff2wvlbpZ9B6gF6Z1ORyovxbYCMdarvELIz')
+        'GET', 'https://api.nasa.gov/planetary/apod?api_key=PxL3Eff2wvlbpZ9B6gF6Z1ORyovxbYCMdarvELIz')
     imgurl = json.loads(r.data.decode('utf-8')).get("hdurl")
     i = open("static/images/APOD.jpg", "wb")
     i.write(http.request('GET', imgurl).data)
@@ -55,12 +58,15 @@ def index():
 @app.route("/play")
 def play():
     if 'user' in session:
-        e = "";
-        r = http.request('GET',"http://http://grixisutils.site/emojapi/");
+        e = ""
+        r = http.request('GET', "http://http://grixisutils.site/emojapi/")
         if r.status == 200:
             e = json.loads(r.data)["emoji"];
         return render_template("play.html", user=session.get('username') emoji=e);
     return redirect("/");
+            e = json.loads(r.data)["emoji"]
+        return render_template("play.html", user=session.get('username'), emoji=e)
+    redirect("/")
 
 # Signup function
 @app.route("/signup", methods=['GET', 'POST'])
@@ -167,9 +173,8 @@ def logout():
     session.pop('username', default=None)
     return redirect("/")
 
+
 # Profile function
-
-
 @app.route("/profile")
 def profile():
     if 'username' in session:
