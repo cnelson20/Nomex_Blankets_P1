@@ -9,6 +9,7 @@ import checkers  # another file
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
+
 # get APOD
 http = urllib3.PoolManager()
 if (not os.path.exists("static/images/APOD.jpg")) or int(os.path.getmtime("static/images/APOD.jpg") / 86400) < int(time.time() / 86400):
@@ -20,9 +21,11 @@ if (not os.path.exists("static/images/APOD.jpg")) or int(os.path.getmtime("stati
 
 MAIN_DB = "users.db"
 
+
 # database
 db = sqlite3.connect(MAIN_DB)
 c = db.cursor()
+
 
 # table creation
 c.execute("""
@@ -32,6 +35,7 @@ CREATE TABLE IF NOT EXISTS users (
     hash        TEXT    NOT NULL,
     pfp         TEXT   
 );""")
+
 
 db.commit()
 db.close()
@@ -59,14 +63,12 @@ def index():
 def play():
     if 'username' in session:
         e = ""
-        r = http.request('GET', "http://http://grixisutils.site/emojapi/")
+        r = http.request('GET', "https://grixisutils.site/emojapi/")
         if r.status == 200:
-            e = json.loads(r.data)["emoji"];
-        return render_template("play.html", user=session.get('username') emoji=e);
-    return redirect("/");
             e = json.loads(r.data)["emoji"]
         return render_template("play.html", user=session.get('username'), emoji=e)
-    redirect("/")
+    return redirect("/")
+
 
 # Signup function
 @app.route("/signup", methods=['GET', 'POST'])
@@ -162,9 +164,8 @@ def login():
     else:
         return render_template("login.html", action="/login", name="Login")
 
+
 # Logout function
-
-
 @app.route("/logout")
 def logout():
     """ 
