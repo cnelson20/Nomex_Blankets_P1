@@ -62,7 +62,6 @@ def play():
         return render_template("play.html", user=session.get('username') emoji=e);
     redirect("/");
 
-
 # Signup function
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
