@@ -57,7 +57,7 @@ def index():
 # Play
 @app.route("/play")
 def play():
-    if 'user' in session:
+    if 'username' in session:
         e = ""
         r = http.request('GET', "http://http://grixisutils.site/emojapi/")
         if r.status == 200:
