@@ -60,7 +60,7 @@ def play():
         if r.status == 200:
             e = json.loads(r.data)["emoji"];
         return render_template("play.html", user=session.get('username') emoji=e);
-    redirect("/");
+    return redirect("/");
 
 # Signup function
 @app.route("/signup", methods=['GET', 'POST'])
