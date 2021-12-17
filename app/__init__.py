@@ -9,7 +9,6 @@ import checkers  # another file
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
-
 # get APOD
 http = urllib3.PoolManager()
 if (not os.path.exists("static/images/APOD.jpg")) or int(os.path.getmtime("static/images/APOD.jpg") / 86400) < int(time.time() / 86400):
@@ -21,11 +20,9 @@ if (not os.path.exists("static/images/APOD.jpg")) or int(os.path.getmtime("stati
 
 MAIN_DB = "users.db"
 
-
 # database
 db = sqlite3.connect(MAIN_DB)
 c = db.cursor()
-
 
 # table creation
 c.execute("""
@@ -36,10 +33,8 @@ CREATE TABLE IF NOT EXISTS users (
     pfp         TEXT   
 );""")
 
-
 db.commit()
 db.close()
-
 
 def isAlphaNum(string):
     """
@@ -51,12 +46,10 @@ def isAlphaNum(string):
             return False
     return True
 
-
 # Home page
 @app.route("/")
 def index():
     return render_template("index.html", user=session.get('username'))
-
 
 # Play
 @app.route("/play")
@@ -68,7 +61,6 @@ def play():
             e = json.loads(r.data)["emoji"]
         return render_template("play.html", user=session.get('username'), emoji=e)
     return redirect("/")
-
 
 # Signup function
 @app.route("/signup", methods=['GET', 'POST'])
@@ -134,7 +126,6 @@ def signup():
     else:
         return render_template("login.html", action="/signup", name="Sign Up")
 
-
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     """
@@ -152,18 +143,17 @@ def login():
             hashed = c.fetchone()  # [0]
             db.close()
             if (hashed == None):
-                return render_template("login.html", name="Login", action="/login", error="User does not exist.")
+                return render_template("login.html", name="Login", action="/login", error="Invalid username or password")
             else:
                 if hashed[0] == request.form['password']:
                     session['username'] = request.form['username']
                     return redirect('/')
                 else:
-                    return render_template("login.html", name="Login", action="/login", error="Password is incorrect")
+                    return render_template("login.html", name="Login", action="/login", error="Invalid username or password")
         else:
             return render_template("login.html", name="Login", action="/login", error="An error occurred. Please try logging in again.")
     else:
         return render_template("login.html", action="/login", name="Login")
-
 
 # Logout function
 @app.route("/logout")
@@ -174,7 +164,6 @@ def logout():
     session.pop('username', default=None)
     return redirect("/")
 
-
 # Profile function
 @app.route("/profile")
 def profile():
@@ -182,7 +171,6 @@ def profile():
         return render_template("profile.html", user=session.get('username'))
     else:
         return redirect("/login")
-
 
 if __name__ == "__main__":
     app.debug = True
