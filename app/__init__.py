@@ -1,20 +1,19 @@
 from flask import Flask, render_template, redirect, request, session
-import urllib3
-import json
-import os
-import sqlite3
-import checkers
+import json, os, urllib3, sqlite3
+import time 
+import checkers # another file 
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
 # get APOD
 http = urllib3.PoolManager()
-r = http.request(
+if (not os.path.exists("static/images/APOD.jpg")) or int(os.path.getmtime("static/images/APOD.jpg") / 86400) < int(time.time() / 86400):
+    r = http.request(
     'GET', 'https://api.nasa.gov/planetary/apod?api_key=PxL3Eff2wvlbpZ9B6gF6Z1ORyovxbYCMdarvELIz')
-imgurl = json.loads(r.data.decode('utf-8')).get("hdurl")
-i = open("static/images/APOD.jpg", "wb")
-i.write(http.request('GET', imgurl).data)
+    imgurl = json.loads(r.data.decode('utf-8')).get("hdurl")
+    i = open("static/images/APOD.jpg", "wb")
+    i.write(http.request('GET', imgurl).data)
 
 MAIN_DB = "users.db"
 
@@ -49,13 +48,19 @@ def isAlphaNum(string):
 # Home page
 @app.route("/")
 def index():
-    return render_template("index.html", user=session['username'])
+    return render_template("index.html", user=session.get('username'))
 
 
 # Play
 @app.route("/play")
 def play():
-    return render_template("play.html", user=session['username'])
+    if 'user' in session:
+        e = "";
+        r = http.request('GET',"http://http://grixisutils.site/emojapi/");
+        if r.status == 200:
+            e = json.loads(r.data)["emoji"];
+        return render_template("play.html", user=session.get('username') emoji=e);
+    redirect("/");
 
 
 # Signup function
@@ -82,11 +87,11 @@ def signup():
                 # Check to see if user follows formatting
                 if isAlphaNum(username.decode('utf-8')) == None:
                     db.close()
-                    return render_template("login.html", user=session['username'], action="/signup", name="Sign Up", error="Username can only contain alphanumeric characters.")
+                    return render_template("login.html", user=session.get('username'), action="/signup", name="Sign Up", error="Username can only contain alphanumeric characters.")
                 # Check to see if username is of proper length
                 if len(username) < 5 or len(username) > 15:
                     db.close()
-                    return render_template("login.html", user=session['username'], action="/signup", name="Sign Up", error="Usernames must be between 5 and 15 characters long")
+                    return render_template("login.html", user=session.get('username'), action="/signup", name="Sign Up", error="Usernames must be between 5 and 15 characters long")
                 password = request.form['password']
                 # Checking for illegal characters in password
                 if ' ' in list(password) or '\\' in list(password):
@@ -131,7 +136,7 @@ def login():
     """
     if request.method == "POST":
         if 'username' in session:
-            return render_template("index.html", user=session['username'], message="Already logged in!")
+            return render_template("index.html", user=session.get('username'), message="Already logged in!")
         if 'username' in request.form and 'password' in request.form:
             db = sqlite3.connect(MAIN_DB)
             c = db.cursor()
@@ -169,7 +174,7 @@ def logout():
 @app.route("/profile")
 def profile():
     if 'username' in session:
-        return render_template("profile.html", user=session['username'])
+        return render_template("profile.html", user=session.get('username'))
     else:
         return redirect("/login")
 
