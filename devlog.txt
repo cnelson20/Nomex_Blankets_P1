@@ -63,3 +63,6 @@ kevinC -- 2021-12-17 12:13
 Fixed a few bugs which caused the site to crash.
 Added a field to change what emoji displays on checkerboard.
 Make checkerboard auto-resize.
+
+hanZ - 2021-12-17 03:32
+Changed login error messages for better site security.
