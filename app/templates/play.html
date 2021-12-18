@@ -6,12 +6,16 @@
 {% endblock %}
 {% block content %}
   <table>
-    {% for i in range (8) %}
+    {% for j in range (8) %}
       <tr>
-        {% for j in range(8) %}
-          <td class="h1">{{ emoji }}</td>
+        {% for i in range(8) %}
+          <td class="h1">
+			{% if game['board'][j][i] != 0 %}
+				{{ game['emojis'][ game['board'][j][i] % 2 ] }}
+			{% endif %}
+		  </td>
         {% endfor %}
       </tr>
     {% endfor %}
   </table>
-{% endblock %}W
+{% endblock %}

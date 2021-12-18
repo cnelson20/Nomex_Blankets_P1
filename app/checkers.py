@@ -27,17 +27,27 @@ def generate_board():
 
     return board;
 
-def start_game():
-    if (not 'username' in session) or user in games_dict:
+def start_game(session):
+    if (not 'username' in session) or 'game' in session:
         return False;
     else:
         session['game'] = dict();
         session['game']['board'] = generate_board();
         session['game']['turn'] = 0;
+        session['game']['emojis'] = ["🐘","🐊"];
         # generate emojis
         return True;
 
-def remove_game():
+def set_emojis(session,e1,e2):
+    if 'game' in session:
+        if (e1 != ""):
+            session['game']['emojis'][0] = e1;
+        if (e2 != ""):
+            session['game']['emojis'][1] = e2;
+        return True;
+    return False;
+
+def remove_game(session):
     ''' 
        delete a game 
     '''
@@ -46,21 +56,21 @@ def remove_game():
         return True
     return False
 
-def game_exists():
+def game_exists(session):
     return 'game' in session;
 
-def turns(doublehop):
+def turns(session,doublehop):
     if (not doublehop):
         session['game']['turn'] = invert10(session['game']['turn']);
     return True
 
-def clear_unused():
+def clear_unused(session):
     for y in range(8):
         for x in range(8):
             if (x + y) % 2 == 0:
                 session['game']['board'][y][x] = 0;
 
-def move(oldx,oldy,movex,movey):
+def move(session,oldx,oldy,movex,movey):
     '''
        move piece 
     '''
@@ -97,13 +107,12 @@ def move(oldx,oldy,movex,movey):
                 if (movey == 0 and board[movey][movex] <= 2):
                     board[movey][movex] += 2
                 board[oldy][oldx] = 0;
-                return turns(doublehop);
+                return turns(session,doublehop);
     else:
         print("game not in session")
         # print(session)
         return False  
 
-session = dict();
 if __name__ == "__main__":
     session['user'] = 'username';
     session['game'] = dict();

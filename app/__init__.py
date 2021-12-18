@@ -55,11 +55,27 @@ def index():
 @app.route("/play")
 def play():
     if 'username' in session:
-        e = ""
-        r = http.request('GET', "https://grixisutils.site/emojapi/")
-        if r.status == 200:
-            e = json.loads(r.data)["emoji"]
-        return render_template("play.html", user=session.get('username'), emoji=e)
+        if 'game' not in session:
+            checkers.start_game(session);
+            e1 = ""
+            r = http.request('GET', "https://grixisutils.site/emojapi/")
+            if r.status == 200:
+                e1 = json.loads(r.data)["emoji"]
+            else:
+                print(str(r.__dict__));
+            # Do again for other player 
+            e2 = ""
+            r = http.request('GET', "https://grixisutils.site/emojapi/")
+            if r.status == 200:
+                e2 = json.loads(r.data)["emoji"]
+            else:
+                print(str(r.__dict__));
+            checkers.set_emojis(session,e1,e2);
+        print(session['game']['board']);
+        if request.method == 'GET':
+            return render_template("play.html", user=session.get('username'), game=session['game'])
+        else:
+            return "poop";
     return redirect("/")
 
 # Signup function
