@@ -2,12 +2,14 @@
 {% block title %}Profile{% endblock %}
 {% block head %}
   {{ super() }}
-  <style type="text/css">
-    .important { color: #336699; }
-  </style>
+  <link href="/static/css/profile.css" rel="stylesheet">
 {% endblock %}
 {% block content %}
-  <h1>Checkers</h1>
-  <p class="important">
-    Your Profile
+  <h2 class="important">{{ user }}'s Profile</h2>
+  <table class="table table-hover">
+    <tr>
+      <td>Profile Picture</td>
+      <td><img src="{{ pfp }}"></td>
+    </tr>
+  </table>
 {% endblock %}

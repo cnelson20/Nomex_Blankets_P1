@@ -65,7 +65,13 @@ Added a field to change what emoji displays on checkerboard.
 Make checkerboard auto-resize.
 
 hanZ -- 2021-12-17 15:32
+
 Changed login error messages for better site security.
 
 cameronN -- 2021-12-18 15:17
+
 Added code for play to display the board
+
+kevinC -- 2021-12-20 09:19
+
+Added profile picture to profile page
