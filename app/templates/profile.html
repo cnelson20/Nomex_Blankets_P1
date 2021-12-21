@@ -6,9 +6,14 @@
 {% endblock %}
 {% block content %}
   <h2 class="important">{{ user }}'s Profile</h2>
-  <table class="table table-hover">
+  <table>
     <tr>
-      <td>Profile Picture</td>
+      <td>
+        Profile Picture
+        <form method="post" action="/newpfp">
+          <input class="btn btn-primary" type="submit" value="Random PFP">
+        </form>
+      </td>
       <td><img src="{{ pfp }}"></td>
     </tr>
   </table>
