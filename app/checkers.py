@@ -17,9 +17,12 @@ def generate_board():
     clear = [0,0,0,0,0,0,0,0];
     for i in range(8):
         board.append(clear);
-    board[0] = basic;
+    board[0] = [i for i in basic]
     board[1] = gen_list(map(invert10,basic));
-    board[2] = basic;
+    board[2] = [i for i in basic]
+
+    board[3] = [i for i in clear]
+    board[4] = [i for i in clear]
 
     board[5] = gen_list(map(times2,map(invert10,basic)));
     board[6] = gen_list(map(times2,basic));
@@ -100,7 +103,7 @@ def move(session,oldx,oldy,movex,movey):
                 if (movey == 0 and board[movey][movex] <= 2):
                     board[movey][movex] += 2
                 board[oldy][oldx] = 0;
-                return turns(doublehop);
+                return turns(session,doublehop);
         if (game_turn == 1 or board[oldy][oldx] >= 3):
             if ((movex == oldx - 1 and movey == oldy + 1) or (movex == oldx + 1 and movey == oldy + 1)) and board[movey][movex] == 0:
                 board[movey][movex] = board[oldy][oldx];
@@ -114,18 +117,23 @@ def move(session,oldx,oldy,movex,movey):
         return False  
 
 if __name__ == "__main__":
+    session = dict();
+    letterNums = dict(A=0,B=1,C=2,D=3,E=4,F=5,G=6,H=7)
     session['user'] = 'username';
     session['game'] = dict();
     session['game']['board'] = generate_board()
     session['game']['turn'] = 0;
     while True:
-        print(*session['game']['board'],sep="\n");
+        print("   A  B  C  D  E  F  G  H");
+        for i in range(len(session['game']['board'])):
+            row = session['game']['board'][i]
+            print(str(i) + " " + str(row))
         print("Turn: " + str(1 + invert10(session['game']['turn'])))
         first = True
-        inp = [0,0,0,0]
-        while first or not move(int(inp[0]),int(inp[1]),int(inp[2]),int(inp[3])):
+        inp = [-1,-1,-1,-1]
+        while first or not move(session,letterNums[inp[0]], int(inp[1]), letterNums[inp[2]], int(inp[3])):
             first = False
-            inp = input(": ");
+            inp = input(": ").upper();
             inp = inp.split(" ");
         # clear_unused();
     
