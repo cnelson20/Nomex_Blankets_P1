@@ -76,7 +76,7 @@ def play():
             checkers.set_emojis(session, e1, e2)
         print(session['game']['board'])
         if request.method == 'GET':
-            return render_template("play.html", user=session.get('username'), game=session['game'])
+            return render_template("play.html", user=session.get('username'), game=session['game'], turn=session['game']['turn']+1)
         else:
             return "poop"
     return redirect("/")
