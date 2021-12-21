@@ -207,13 +207,15 @@ def profile():
 def newpfp():
     if 'username' in session:
         db = sqlite3.connect(MAIN_DB)
+        c = db.cursor()
         r = http.request('GET', "http://dog.ceo/api/breeds/image/random")
         pfpurl = ""
         if r.status == 200:
             pfpurl = json.loads(r.data).get('message')
-        c.execute("""REPLACE INTO users (username,pfp) VALUES (?,?)""",
-                              (request.form['username'], pfpurl,))
-        return redirect("/")
+        c.execute("""UPDATE users SET pfp = \'""" + pfpurl + """\'WHERE username = \'""" + session.get('username') + """\'""")
+        db.commit()
+        db.close()
+        return redirect("/profile")
     else:
         return redirect("/login")
 
