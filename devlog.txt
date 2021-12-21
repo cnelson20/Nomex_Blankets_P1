@@ -79,3 +79,7 @@ Added profile picture to profile page
 cameronN -- 2021-12-20 09:30
 
 Worked on checkers code
+
+cameronN -- 2021-12-21 09:27
+
+checkers code

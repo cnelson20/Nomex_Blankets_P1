@@ -5,12 +5,6 @@ def invert10(i):
 def times2(i):
     return 2 * i;
 
-def gen_list(iterable_thing):
-    l = list();
-    for i in iterable_thing:
-        l.append(i);
-    return l;
-        
 def generate_board():
     board = list();
     basic = [0,1,0,1,0,1,0,1];
@@ -18,15 +12,15 @@ def generate_board():
     for i in range(8):
         board.append(clear);
     board[0] = [i for i in basic]
-    board[1] = gen_list(map(invert10,basic));
+    board[1] = [i for i in map(invert10,basic)];
     board[2] = [i for i in basic]
 
     board[3] = [i for i in clear]
     board[4] = [i for i in clear]
 
-    board[5] = gen_list(map(times2,map(invert10,basic)));
-    board[6] = gen_list(map(times2,basic));
-    board[7] = gen_list(map(times2,map(invert10,basic)));
+    board[5] = [i for i in map(times2,map(invert10,basic))]
+    board[6] = [i for i in map(times2,basic)]
+    board[7] = [i for i in map(times2,map(invert10,basic))]
 
     return board;
 
@@ -97,20 +91,58 @@ def move(session,oldx,oldy,movex,movey):
             print("Not your piece!")
             return False        
 
+        # Player 2's pieces or kings
         if (game_turn == 0 or board[oldy][oldx] >= 3):
             if ((movex == oldx - 1 and movey == oldy - 1) or (movex == oldx + 1 and movey == oldy - 1)) and board[movey][movex] == 0:
                 board[movey][movex] = board[oldy][oldx];
                 if (movey == 0 and board[movey][movex] <= 2):
                     board[movey][movex] += 2
                 board[oldy][oldx] = 0;
-                return turns(session,doublehop);
+                return turns(session,False);
+
+            elif movex == oldx - 2 and movey == oldy - 2 and board[movey][movex] == 0 and board[oldy-1][oldx-1] != 0 and board[oldy-1][oldx-1] % 2 != game_turn:
+                board[oldy-1][oldx-1] = 0;
+                board[movey][movex] = board[oldy][oldx];
+                if movey == 0 and board[movey][movex] <= 2:
+                    board[movey][movex] += 2 # Kinging
+                board[oldy][oldx] = 0;
+                return turns(session,doublehop) # Doublehop needs to be done
+
+            elif movex == oldx + 2 and movey == oldy - 2 and board[movey][movex] == 0 and board[oldy-1][oldx+1] != 0 and board[oldy-1][oldx+1] % 2 != game_turn:
+                board[oldy-1][oldx+1] = 0; # Destroy jumped on piece
+                board[movey][movex] = board[oldy][oldx]; # Move piece
+                if movey == 0 and board[movey][movex] <= 2:
+                    board[movey][movex] += 2 # Kinging
+                board[oldy][oldx] = 0; # Delete moved old piece
+                return turns(session,doublehop)
+
+            print("Not a legal player 2 / king move here!")
+        # Player 1's pieces or kings
         if (game_turn == 1 or board[oldy][oldx] >= 3):
             if ((movex == oldx - 1 and movey == oldy + 1) or (movex == oldx + 1 and movey == oldy + 1)) and board[movey][movex] == 0:
                 board[movey][movex] = board[oldy][oldx];
                 if (movey == 0 and board[movey][movex] <= 2):
                     board[movey][movex] += 2
                 board[oldy][oldx] = 0;
-                return turns(session,doublehop);
+                return turns(session,False);
+
+        elif movex == oldx - 2 and movey == oldy + 2 and board[movey][movex] == 0 and board[oldy+1][oldx-1] != 0 and board[oldy+1][oldx-1] % 2 != game_turn:
+            board[oldy+1][oldx-1] = 0;
+            board[movey][movex] = board[oldy][oldx];
+            if movey == 7 and board[movey][movex] <= 2:
+                board[movey][movex] += 2 # Kinging
+            board[oldy][oldx] = 0;
+            return turns(session,doublehop) # Doublehop needs to be done
+
+        elif movex == oldx + 2 and movey == oldy + 2 and board[movey][movex] == 0 and board[oldy+1][oldx+1] != 0 and board[oldy+1][oldx+1] % 2 != game_turn:
+            board[oldy+1][oldx+1] = 0; # Destroy jumped on piece
+            board[movey][movex] = board[oldy][oldx]; # Move piece
+            if movey == 7 and board[movey][movex] <= 2:
+                board[movey][movex] += 2 # Kinging
+            board[oldy][oldx] = 0; # Delete moved old piece
+            return turns(session,doublehop)
+
+        print("Not a legal player 1 / king move here!")
     else:
         print("game not in session")
         # print(session)
@@ -127,7 +159,14 @@ if __name__ == "__main__":
         print("   A  B  C  D  E  F  G  H");
         for i in range(len(session['game']['board'])):
             row = session['game']['board'][i]
-            print(str(i) + " " + str(row))
+            rowstr = " "
+            for item in row:
+                if item != 0:
+                    rowstr += str(item);
+                else:
+                    rowstr += " "
+                rowstr += "  "
+            print(str(i) + " " + rowstr)
         print("Turn: " + str(1 + invert10(session['game']['turn'])))
         first = True
         inp = [-1,-1,-1,-1]
