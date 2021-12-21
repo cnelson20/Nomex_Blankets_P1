@@ -213,6 +213,7 @@ def newpfp():
             pfpurl = json.loads(r.data).get('message')
         c.execute("""REPLACE INTO users (username,pfp) VALUES (?,?)""",
                               (request.form['username'], pfpurl,))
+        return redirect("/")
     else:
         return redirect("/login")
 
