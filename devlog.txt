@@ -75,3 +75,7 @@ Added code for play to display the board
 kevinC -- 2021-12-20 09:19
 
 Added profile picture to profile page
+
+cameronN -- 2021-12-20 09:30
+
+Worked on checkers code
