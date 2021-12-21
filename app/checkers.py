@@ -162,7 +162,7 @@ if __name__ == "__main__":
             rowstr = " "
             for item in row:
                 if item != 0:
-                    rowstr += str(item);
+                    rowstr += "X" if item % 2 == 0 else "O";
                 else:
                     rowstr += " "
                 rowstr += "  "
