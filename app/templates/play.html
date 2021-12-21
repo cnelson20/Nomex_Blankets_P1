@@ -5,17 +5,28 @@
   <link href="/static/css/checkers.css" rel="stylesheet">
 {% endblock %}
 {% block content %}
-  <table>
-    {% for j in range (8) %}
-      <tr>
-        {% for i in range(8) %}
-          <td class="h1">
-			{% if game['board'][j][i] != 0 %}
-				{{ game['emojis'][ game['board'][j][i] % 2 ] }}
-			{% endif %}
-		  </td>
-        {% endfor %}
-      </tr>
-    {% endfor %}
-  </table>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        1 of 3
+      </div>
+      <div class="col-7">
+        <table>
+          {% for j in range (8) %}
+            <tr>
+              {% for i in range(8) %}
+                <td class="h1">
+            {% if game['board'][j][i] != 0 %}
+              {{ game['emojis'][ game['board'][j][i] % 2 ] }}
+            {% endif %}
+            </td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+      <div class="col">
+        <h1>It is currently player {{ turn }}'s turn</h1>
+      </div>
+    </div>
 {% endblock %}

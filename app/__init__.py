@@ -76,7 +76,7 @@ def play():
             checkers.set_emojis(session, e1, e2)
         print(session['game']['board'])
         if request.method == 'GET':
-            return render_template("play.html", user=session.get('username'), game=session['game'])
+            return render_template("play.html", user=session.get('username'), game=session['game'], turn=session['game']['turn']+1)
         else:
             return "poop"
     return redirect("/")
@@ -201,6 +201,23 @@ def profile():
     else:
         return redirect("/login")
 
+
+# Random PFP Function
+@app.route("/newpfp")
+def newpfp():
+    if 'username' in session:
+        db = sqlite3.connect(MAIN_DB)
+        c = db.cursor()
+        r = http.request('GET', "http://dog.ceo/api/breeds/image/random")
+        pfpurl = ""
+        if r.status == 200:
+            pfpurl = json.loads(r.data).get('message')
+        c.execute("""UPDATE users SET pfp = \'""" + pfpurl + """\'WHERE username = \'""" + session.get('username') + """\'""")
+        db.commit()
+        db.close()
+        return redirect("/profile")
+    else:
+        return redirect("/login")
 
 if __name__ == "__main__":
     app.debug = True
