@@ -202,6 +202,20 @@ def profile():
         return redirect("/login")
 
 
+# Random PFP Function
+@app.route("/newpfp")
+def newpfp():
+    if 'username' in session:
+        db = sqlite3.connect(MAIN_DB)
+        r = http.request('GET', "http://dog.ceo/api/breeds/image/random")
+        pfpurl = ""
+        if r.status == 200:
+            pfpurl = json.loads(r.data).get('message')
+        c.execute("""REPLACE INTO users (username,pfp) VALUES (?,?)""",
+                              (request.form['username'], pfpurl,))
+    else:
+        return redirect("/login")
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
