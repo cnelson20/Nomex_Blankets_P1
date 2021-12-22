@@ -87,3 +87,10 @@ Added random profile picture function.
 cameronN -- 2021-12-21 09:27
 
 checkers code
+
+kevinC -- 2021-12-22 09:25
+
+Change play page to use a grid system.
+Added whoose turn it is on play page.
+Make footer dark instead of light.
+Added a limit to img size in profile page.
