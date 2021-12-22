@@ -195,7 +195,7 @@ def profile():
         c = db.cursor()
         # Obtaining data from database
         c.execute("""SELECT pfp FROM users WHERE username = ?;""",
-                    (session.get("username"),))
+                  (session.get("username"),))
         profile = c.fetchone()[0]
         return render_template("profile.html", user=session.get('username'), pfp=profile)
     else:
@@ -212,12 +212,14 @@ def newpfp():
         pfpurl = ""
         if r.status == 200:
             pfpurl = json.loads(r.data).get('message')
-        c.execute("""UPDATE users SET pfp = \'""" + pfpurl + """\'WHERE username = \'""" + session.get('username') + """\'""")
+        c.execute("""UPDATE users SET pfp = \'""" + pfpurl +
+                  """\'WHERE username = \'""" + session.get('username') + """\'""")
         db.commit()
         db.close()
         return redirect("/profile")
     else:
         return redirect("/login")
+
 
 if __name__ == "__main__":
     app.debug = True
