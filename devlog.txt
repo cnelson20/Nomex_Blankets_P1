@@ -98,3 +98,7 @@ Added a limit to img size in profile page.
 cameronN -- 2021-12-23 09:10
 
 Started to work on letting users move pieces
+
+cameronN -- 2021-12-23 11:39
+
+User can now move pieces(board looks very strange now)

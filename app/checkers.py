@@ -108,7 +108,8 @@ def move(session,oldx,oldy,movex,movey):
     '''
        move piece 
     '''
-    if 'game' in session:
+    if True:
+        print("[oldx: " + str(oldx) + " oldy: " + str(oldy) + "] [movex: " + str(movex) + " movey: " + str(movey) + "]");
         game_turn = session['game']['turn'];
         board = session['game']['board'];
 
@@ -121,7 +122,7 @@ def move(session,oldx,oldy,movex,movey):
             return 2
             
         if session['game']['doublehop']:
-            if oldx != session['game']['doublehopxy'][0] or oldy != session['game']['doublehopxy'][1]:
+            if oldx != game['doublehopxy'][0] or oldy != game['doublehopxy'][1]:
                 #print("Must doublehop!")
                 return 3
         
@@ -141,8 +142,9 @@ def move(session,oldx,oldy,movex,movey):
                 if (movey == 0 and board[movey][movex] <= 2):
                     board[movey][movex] += 2
                 board[oldy][oldx] = 0;
+                session['game']['board'] = board;
                 turns(session,False,movex,movey);
-                return 0;
+                return session['game'];
 
             elif movex == oldx - 2 and movey == oldy - 2 and board[movey][movex] == 0 and board[oldy-1][oldx-1] != 0 and board[oldy-1][oldx-1] % 2 != game_turn:
                 board[oldy-1][oldx-1] = 0;
@@ -150,8 +152,9 @@ def move(session,oldx,oldy,movex,movey):
                 if movey == 0 and board[movey][movex] <= 2:
                     board[movey][movex] += 2 # Kinging
                 board[oldy][oldx] = 0;
+                session['game']['board'] = board;
                 turns(session,True,movex,movey) # Doublehop needs to be done
-                return 0;
+                return session['game'];
 
             elif movex == oldx + 2 and movey == oldy - 2 and board[movey][movex] == 0 and board[oldy-1][oldx+1] != 0 and board[oldy-1][oldx+1] % 2 != game_turn:
                 board[oldy-1][oldx+1] = 0; # Destroy jumped on piece
@@ -160,7 +163,7 @@ def move(session,oldx,oldy,movex,movey):
                     board[movey][movex] += 2 # Kinging
                 board[oldy][oldx] = 0; # Delete moved old piece
                 turns(session,True,movex,movey)
-                return 0;
+                return session['game'];
 
             #print("Not a legal player 2 / king move here!")
         # Player 1's pieces or kings
@@ -170,8 +173,9 @@ def move(session,oldx,oldy,movex,movey):
                 if (movey == 0 and board[movey][movex] <= 2):
                     board[movey][movex] += 2
                 board[oldy][oldx] = 0;
+                session['game']['board'] = board;
                 turns(session,False,movex,movey);
-                return 0;
+                return session['game'];
 
             elif movex == oldx - 2 and movey == oldy + 2 and board[movey][movex] == 0 and board[oldy+1][oldx-1] != 0 and board[oldy+1][oldx-1] % 2 != game_turn:
                 board[oldy+1][oldx-1] = 0;
@@ -179,8 +183,9 @@ def move(session,oldx,oldy,movex,movey):
                 if movey == 7 and board[movey][movex] <= 2:
                     board[movey][movex] += 2 # Kinging
                 board[oldy][oldx] = 0;
+                session['game']['board'] = board;
                 turns(session,True,movex,movey) # Doublehop needs to be done
-                return 0;
+                return session['game'];
 
             elif movex == oldx + 2 and movey == oldy + 2 and board[movey][movex] == 0 and board[oldy+1][oldx+1] != 0 and board[oldy+1][oldx+1] % 2 != game_turn:
                 board[oldy+1][oldx+1] = 0; # Destroy jumped on piece
@@ -188,8 +193,9 @@ def move(session,oldx,oldy,movex,movey):
                 if movey == 7 and board[movey][movex] <= 2:
                     board[movey][movex] += 2 # Kinging
                 board[oldy][oldx] = 0; # Delete moved old piece
+                session['game']['board'] = board;
                 turns(session,True,movex,movey)
-                return 0;
+                return session['game'];
 
         #print("Not a legal player 1 / king move here!")
         return 6;
@@ -201,9 +207,8 @@ def move(session,oldx,oldy,movex,movey):
 if __name__ == "__main__":
     session = dict();
     letterNums = dict(A=0,B=1,C=2,D=3,E=4,F=5,G=6,H=7)
-    session['user'] = 'username';
     session['game'] = dict();
-    session['game']['board'] = generate_board()
+    session['game']['board'] = generate_board();
     session['game']['turn'] = 0;
     session['game']['doublehop'] = False
     while True:
