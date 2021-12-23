@@ -8,3 +8,8 @@ table {
   text-align: center;
   align-self: center;
 }
+
+img {
+  max-width: 500px;
+  max-height: 500px;
+}
