@@ -213,8 +213,7 @@ def newpfp():
         pfpurl = ""
         if r.status == 200:
             pfpurl = json.loads(r.data).get('message')
-        c.execute("""UPDATE users SET pfp = \'""" + pfpurl +
-                  """\'WHERE username = \'""" + session.get('username') + """\'""")
+        c.execute("""UPDATE users SET pfp = ? WHERE username = ?;""",(pfpurl,session.get('username'),))
         db.commit()
         db.close()
         return redirect("/profile")

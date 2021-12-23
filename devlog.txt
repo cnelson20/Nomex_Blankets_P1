@@ -94,3 +94,7 @@ Change play page to use a grid system.
 Added whoose turn it is on play page.
 Make footer dark instead of light.
 Added a limit to img size in profile page.
+
+cameronN -- 2021-12-23 09:10
+
+Started to work on letting users move pieces
