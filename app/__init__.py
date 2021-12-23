@@ -74,11 +74,12 @@ def play():
             else:
                 print(str(r.__dict__))
             checkers.set_emojis(session, e1, e2)
-        print(session['game']['board'])
         if request.method == 'GET':
+            print(session['game']['board'])
             return render_template("play.html", user=session.get('username'), game=session['game'], turn=session['game']['turn']+1)
-        else:
-            return "poop"
+        else: # POST
+            print(str(request.form.__dict__))
+            return redirect("/play")
     return redirect("/")
 
 
@@ -192,7 +193,7 @@ def logout():
 def profile():
     if 'username' in session:
         db = sqlite3.connect(MAIN_DB)
-        c = db.cursor()
+        c = db.cursor()                            
         # Obtaining data from database
         c.execute("""SELECT pfp FROM users WHERE username = ?;""",
                   (session.get("username"),))
@@ -212,8 +213,7 @@ def newpfp():
         pfpurl = ""
         if r.status == 200:
             pfpurl = json.loads(r.data).get('message')
-        c.execute("""UPDATE users SET pfp = \'""" + pfpurl +
-                  """\'WHERE username = \'""" + session.get('username') + """\'""")
+        c.execute("""UPDATE users SET pfp = ? WHERE username = ?;""",(pfpurl,session.get('username'),))
         db.commit()
         db.close()
         return redirect("/profile")
