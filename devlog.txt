@@ -99,6 +99,12 @@ cameronN -- 2021-12-23 09:10
 
 Started to work on letting users move pieces
 
+kevinC -- 2021-12-23 09:24
+
+Reworked how footer works and fix all the containers.
+Vertically centered play page.
+Add a jumbotron to the main page.
+
 cameronN -- 2021-12-23 11:39
 
-User can now move pieces(board looks very strange now)
+User can now move pieces (board looks very strange now)
