@@ -81,6 +81,8 @@ def play():
             print(str(request.form))
             if 'pieces[]' in request.form:
                 pieces = [s.split("_") for s in request.form.getlist('pieces[]')];
+                if len(pieces) < 2:
+                    return redirect("/play")
                 for i in range(len(pieces)):
                     pieces[i] = [int(j) for j in pieces[i]];
                 if session['game']['board'][pieces[1][0]][pieces[1][1]] != 0 and session['game']['board'][pieces[1][0]][pieces[1][1]] % 2 == session['game']['turn']:
