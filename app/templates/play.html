@@ -5,9 +5,8 @@
   <link href="/static/css/checkers.css" rel="stylesheet">
 {% endblock %}
 {% block content %}
-  <div class="row">
+  <div class="row fillRemaining">
     <div class="col">
-      1 of 3
     </div>
     <div class="col-6">
       <table>
@@ -24,7 +23,7 @@
         {% endfor %}
       </table>
     </div>
-    <div class="col justify-content-center">
+    <div class="col vert-mid">
       <h1>It is currently {{ game['emojis'][ game['turn']]}}'s turn</h1>
       </div>
 {% endblock %}

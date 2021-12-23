@@ -26,3 +26,7 @@ tr:nth-child(even) td:nth-child(odd),
 tr:nth-child(odd) td:nth-child(even) {
   background: rgba(0, 0, 0, 0.5);
 }
+
+.fillRemaining {
+  height: calc(100vh - 200px);
+}
