@@ -108,3 +108,7 @@ Add a jumbotron to the main page.
 cameronN -- 2021-12-23 11:39
 
 User can now move pieces (board looks very strange now)
+
+cameronN -- 2021-12-31 21:31
+
+Updated design doc	
