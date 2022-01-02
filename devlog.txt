@@ -112,3 +112,8 @@ User can now move pieces (board looks very strange now)
 cameronN -- 2021-12-31 21:31
 
 Updated design doc	
+
+kevinC -- 2022-01-01 21:59
+
+Use new style of jumbotron and added to home page
+Added quick rules and how to play snippet
