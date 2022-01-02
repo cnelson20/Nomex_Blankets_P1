@@ -118,10 +118,10 @@ kevinC -- 2022-01-01 21:59
 Use new style of jumbotron and added to home page
 Added quick rules and how to play snippet
 
-kevinC -- 2022-01-02 13:29
+kevinC -- 2022-01-02 15:12
 
 Force footer at the bottom of the view-port
-
-kevinC -- 2022-01-02 14:15
-
 Removed horizontal overflow from home page
+Properly center table
+Make table cells always square
+Auto-resize emoji and check-box

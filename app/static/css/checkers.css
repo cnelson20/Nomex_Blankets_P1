@@ -8,13 +8,13 @@ body {
 table {
   position: absolute;
   left: 30%;
-  top: 10%;
-  width: 40%;
-  height: 80%;
+  top: calc((100vh - 40vw) / 2);
 }
 
-tr {
-  height: 10%;
+td {
+  width: calc(40vw / 8);
+  height: calc(40vw / 8);
+  font-size: calc(40vw / 16);
 }
 
 tr:nth-child(even) td:nth-child(even),
@@ -28,5 +28,10 @@ tr:nth-child(odd) td:nth-child(even) {
 }
 
 .fillRemaining {
-  height: calc(100vh - 200px);
+  height: calc(100vh - 100px);
+}
+
+input {
+  width: calc(40vw / 64);
+  height: calc(40vw / 64);
 }

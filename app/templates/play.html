@@ -14,7 +14,7 @@
         {% for j in range (8) %}
         <tr>
           {% for i in range(8) %}
-          <td class="h1">
+          <td>
             {% if (i + j) % 2 != 0 %}
             <input type="checkbox" name="pieces[]" id="sp_{{ j }}_{{ i }}" value="{{ j }}_{{ i }}"
               onclick="clickBox(this)">
