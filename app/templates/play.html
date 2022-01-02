@@ -1,56 +1,57 @@
 {% extends "layout.html" %}
 {% block title %}Home{% endblock %}
 {% block head %}
-  {{ super() }}
-  <link href="/static/css/checkers.css" rel="stylesheet">
+{{ super() }}
+<link href="/static/css/checkers.css" rel="stylesheet">
 {% endblock %}
 {% block content %}
-  <div class="row fillRemaining text-center">
-    <div class="col">
-    </div>
-    <div class="col-6">
-	  <form action="/play" method="POST" id="checkerform"> 
-		<table>
-		  {% for j in range (8) %}
-			<tr>
-			  {% for i in range(8) %}
-                <td class="h1">
-				  {% if (i + j) % 2 != 0 %}
-					<input type="checkbox" name="pieces[]" id="sp_{{ j }}_{{ i }}" value="{{ j }}_{{ i }}" onclick="clickBox(this)">
-					  {% if game['board'][j][i] != 0 %}
-						{{ game['emojis'][ game['board'][j][i] % 2 ] }}
-					  {% endif %}
-				    </input>
-				  {% endif %}
-				</td>
-              {% endfor %}
-			</tr>
-		  {% endfor %}
-		</table>
-	  </form>
-    </div>
-    <div class="col d-flex align-items-center">
-      <h1>It is currently {{ game['emojis'][ game['turn']]}}'s turn</h1>
-	  <script type="text/javascript">
-		function submitCheckers() {
-			document.getElementById("checkerform").submit();
-		}
-		boxesClicked = [];
-		function clickBox(checkbox) {
-			console.log(checkbox);
-			if (checkbox.checked) {
-				if (boxesClicked.length >= 2) {
-					checkbox.click();
-				} else {
-					boxesClicked.push(checkbox);
-				}
-			} else {
-				// Remove from array
-				i = boxesClicked.indexOf(checkbox);
-				if (i != -1) {boxesClicked.splice(i,1)}
-			}
-		}
-	  </script>
-	  <button onclick="submitCheckers()"> Submit </button> 
-      </div>
-{% endblock %}
+<div class="row fillRemaining text-center">
+  <div class="col">
+  </div>
+  <div class="col-6">
+    <form action="/play" method="POST" id="checkerform">
+      <table>
+        {% for j in range (8) %}
+        <tr>
+          {% for i in range(8) %}
+          <td class="h1">
+            {% if (i + j) % 2 != 0 %}
+            <input type="checkbox" name="pieces[]" id="sp_{{ j }}_{{ i }}" value="{{ j }}_{{ i }}"
+              onclick="clickBox(this)">
+            {% if game['board'][j][i] != 0 %}
+            {{ game['emojis'][ game['board'][j][i] % 2 ] }}
+            {% endif %}
+            </input>
+            {% endif %}
+          </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </table>
+    </form>
+  </div>
+  <div class="col d-flex align-items-center">
+    <h1>It is currently {{ game['emojis'][ game['turn']]}}'s turn</h1>
+    <script type="text/javascript">
+      function submitCheckers() {
+        document.getElementById("checkerform").submit();
+      }
+      boxesClicked = [];
+      function clickBox(checkbox) {
+        console.log(checkbox);
+        if (checkbox.checked) {
+          if (boxesClicked.length >= 2) {
+            checkbox.click();
+          } else {
+            boxesClicked.push(checkbox);
+          }
+        } else {
+          // Remove from array
+          i = boxesClicked.indexOf(checkbox);
+          if (i != -1) { boxesClicked.splice(i, 1) }
+        }
+      }
+    </script>
+    <button onclick="submitCheckers()"> Submit </button>
+  </div>
+  {% endblock %}

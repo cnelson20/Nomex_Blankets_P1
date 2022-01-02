@@ -117,3 +117,7 @@ kevinC -- 2022-01-01 21:59
 
 Use new style of jumbotron and added to home page
 Added quick rules and how to play snippet
+
+kevinC -- 2022-01-02 13:29
+
+Force footer at the bottom of the view-port
