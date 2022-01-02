@@ -55,7 +55,7 @@ def index():
 
 
 # Play
-@app.route("/play",methods=['GET', 'POST'])
+@app.route("/play", methods=['GET', 'POST'])
 def play():
     if 'username' in session:
         if 'game' not in session:
@@ -75,25 +75,28 @@ def play():
                 print(str(r.__dict__))
             checkers.set_emojis(session, e1, e2)
         if request.method == 'GET':
-            print(*session['game']['board'],sep="\n")
+            print(*session['game']['board'], sep="\n")
             return render_template("play.html", user=session.get('username'), game=session['game'], turn=session['game']['turn']+1)
-        else: # POST
+        else:  # POST
             print(str(request.form))
             if 'pieces[]' in request.form:
-                pieces = [s.split("_") for s in request.form.getlist('pieces[]')];
+                pieces = [s.split("_")
+                          for s in request.form.getlist('pieces[]')]
                 if len(pieces) < 2:
                     return redirect("/play")
                 for i in range(len(pieces)):
-                    pieces[i] = [int(j) for j in pieces[i]];
+                    pieces[i] = [int(j) for j in pieces[i]]
                 if session['game']['board'][pieces[1][0]][pieces[1][1]] != 0 and session['game']['board'][pieces[1][0]][pieces[1][1]] % 2 == session['game']['turn']:
                     # move(x1,y1,x2,y2)
-                    moverval = checkers.move(session,pieces[1][1],pieces[1][0],pieces[0][1],pieces[0][0])
+                    moverval = checkers.move(
+                        session, pieces[1][1], pieces[1][0], pieces[0][1], pieces[0][0])
                     if type(moverval) != int:
                         session['game'] = moverval
                     else:
                         print(checkers.geterrorstring(moverval))
                 else:
-                    moverval = checkers.move(session,pieces[0][1],pieces[0][0],pieces[1][1],pieces[1][0])
+                    moverval = checkers.move(
+                        session, pieces[0][1], pieces[0][0], pieces[1][1], pieces[1][0])
                     if type(moverval) != int:
                         session['game'] = moverval
                     else:
@@ -215,7 +218,7 @@ def profile():
     """
     if 'username' in session:
         db = sqlite3.connect(MAIN_DB)
-        c = db.cursor()                            
+        c = db.cursor()
         # Obtaining data from database
         c.execute("""SELECT pfp FROM users WHERE username = ?;""",
                   (session.get("username"),))
@@ -235,7 +238,8 @@ def newpfp():
         pfpurl = ""
         if r.status == 200:
             pfpurl = json.loads(r.data).get('message')
-        c.execute("""UPDATE users SET pfp = ? WHERE username = ?;""",(pfpurl,session.get('username'),))
+        c.execute("""UPDATE users SET pfp = ? WHERE username = ?;""",
+                  (pfpurl, session.get('username'),))
         db.commit()
         db.close()
         return redirect("/profile")
@@ -245,4 +249,4 @@ def newpfp():
 
 if __name__ == "__main__":
     app.debug = True
-    app.run() #app.run(host='0.0.0.0', port=80)
+    app.run()  # app.run(host='0.0.0.0', port=80)

@@ -1,25 +1,25 @@
 {% extends "layout.html" %}
 {% block title %}{{ name }}{% endblock %}
-{% block head%}
+{% block head %}
 {{ super() }}
 <link href="/static/css/signin.css" rel="stylesheet" />
 {% endblock %}
+
 {% block content %}
 <main class="form-signin">
   <form method="POST" action="{{ action }}">
-	{% if error %}
-		<h1 class="h3 mb-3 fw-normal text-danger">{{ error }}</h1>
-	{% else %}
-		{% if success %} 
-			<h1 class="h3 mb-3 fw-normal text-success"> {{ error }}</h1>
-		{% endif %}
-		<h1 class="h3 mb-3 fw-normal">Please {{ name }}</h1>
-	{% endif %}
+    {% if error %}
+    <h1 class="h3 mb-3 fw-normal text-danger">{{ error }}</h1>
+    {% else %} {% if success %}
+    <h1 class="h3 mb-3 fw-normal text-success">{{ error }}</h1>
+    {% endif %}
+    <h1 class="h3 mb-3 fw-normal">Please {{ name }}</h1>
+    {% endif %}
     <div class="form-floating">
       <input
         class="form-control"
         id="floatingInput"
-		name="username"
+        name="username"
         placeholder="Username"
       />
       <label for="floatingInput"> Username </label>
@@ -29,7 +29,7 @@
         type="password"
         class="form-control"
         id="floatingPassword"
-		name="password"
+        name="password"
         placeholder="Password"
       />
       <label for="floatingPassword">Password</label>

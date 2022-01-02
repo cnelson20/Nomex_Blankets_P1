@@ -121,3 +121,7 @@ Added quick rules and how to play snippet
 kevinC -- 2022-01-02 13:29
 
 Force footer at the bottom of the view-port
+
+kevinC -- 2022-01-02 14:15
+
+Removed horizontal overflow from home page

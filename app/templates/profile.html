@@ -1,20 +1,21 @@
 {% extends "layout.html" %}
 {% block title %}Profile{% endblock %}
 {% block head %}
-  {{ super() }}
-  <link href="/static/css/profile.css" rel="stylesheet">
+{{ super() }}
+<link href="/static/css/profile.css" rel="stylesheet" />
 {% endblock %}
+
 {% block content %}
-  <h2 class="important text-center">{{ user }}'s Profile</h2>
-  <table>
-    <tr>
-      <td>
-        Profile Picture
-        <form action="/newpfp">
-          <input class="btn btn-primary" type="submit" value="Random PFP">
-        </form>
-      </td>
-      <td><img src="{{ pfp }}"></td>
-    </tr>
-  </table>
+<h2 class="important text-center">{{ user }}'s Profile</h2>
+<table>
+  <tr>
+    <td>
+      Profile Picture
+      <form action="/newpfp">
+        <input class="btn btn-primary" type="submit" value="Random PFP" />
+      </form>
+    </td>
+    <td><img src="{{ pfp }}" /></td>
+  </tr>
+</table>
 {% endblock %}
