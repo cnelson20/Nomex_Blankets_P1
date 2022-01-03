@@ -79,8 +79,14 @@ def play():
                 print(str(r.__dict__))
             checkers.set_emojis(session, e1, e2)
         if request.method == 'GET':
+            db = sqlite3.connect(MAIN_DB)
+            c = db.cursor()
+            # Obtaining data from database
+            c.execute("""SELECT pfp FROM users WHERE username = ?;""",
+                  (session.get("username"),))
+            profile = c.fetchone()[0]
             print(*session['game']['board'], sep="\n")
-            return render_template("play.html", user=session.get('username'), game=session['game'], turn=session['game']['turn']+1)
+            return render_template("play.html", user=session.get('username'), game=session['game'], turn=session['game']['turn']+1, pfp=profile)
         else:  # POST
             print(str(request.form))
             if 'pieces[]' in request.form:
