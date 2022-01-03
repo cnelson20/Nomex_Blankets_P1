@@ -128,3 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 app/static/images/APOD.jpg
+app/key_nasa.txt
