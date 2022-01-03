@@ -10,10 +10,14 @@ app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
 # get APOD
+key = ''
+with open ('key_nasa.txt') as file:
+    key = file.readline()
+
 http = urllib3.PoolManager()
 if (not os.path.exists("static/images/APOD.jpg")) or int(os.path.getmtime("static/images/APOD.jpg") / 86400) < int(time.time() / 86400):
     r = http.request(
-        'GET', 'https://api.nasa.gov/planetary/apod?api_key=PxL3Eff2wvlbpZ9B6gF6Z1ORyovxbYCMdarvELIz')
+        'GET', 'https://api.nasa.gov/planetary/apod?api_key=' + key)
     imgurl = json.loads(r.data.decode('utf-8')).get("hdurl")
     i = open("static/images/APOD.jpg", "wb")
     i.write(http.request('GET', imgurl).data)
