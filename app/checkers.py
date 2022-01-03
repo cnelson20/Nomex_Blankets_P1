@@ -122,7 +122,7 @@ def move(session,oldx,oldy,movex,movey):
             return 2
             
         if session['game']['doublehop']:
-            if oldx != game['doublehopxy'][0] or oldy != game['doublehopxy'][1]:
+            if oldx != session['game']['doublehopxy'][0] or oldy != session['game']['doublehopxy'][1]:
                 #print("Must doublehop!")
                 return 3
         
