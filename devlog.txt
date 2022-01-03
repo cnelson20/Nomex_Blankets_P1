@@ -125,3 +125,7 @@ Removed horizontal overflow from home page
 Properly center table
 Make table cells always square
 Auto-resize emoji and check-box
+
+kevinC -- 2021-01-03 09:09
+
+Add profile picture to left side of play page
