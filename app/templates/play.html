@@ -14,10 +14,13 @@
         {% for j in range (8) %}
         <tr>
           {% for i in range(8) %}
-          <td>
+          <td {% if game['board'][j][i] >= 3 %} class="withcrown" {% else %} class="nocrown" {% endif %}>
             {% if (i + j) % 2 != 0 %}
             <input type="checkbox" name="pieces[]" id="sp_{{ j }}_{{ i }}" value="{{ j }}_{{ i }}"
-              onclick="clickBox(this)">
+              onclick="clickBox(this)" >
+			{% if game['board'][j][i] >= 3 %}
+			👑 <br> 
+			{% endif %}
             {% if game['board'][j][i] != 0 %}
             {{ game['emojis'][ game['board'][j][i] % 2 ] }}
             {% endif %}
@@ -31,8 +34,17 @@
     </form>
   </div>
   <div class="col d-flex align-items-center">
-    <h1>It is currently {{ game['emojis'][ game['turn']]}}'s turn</h1>
-    <script type="text/javascript">
+	<div class="row d-flex align-items-center">
+	  {% if error %} 
+		<h1 class="text-danger"> {{ error }} </h1>
+		<br> 
+	  {% endif %}
+	  <h1>It is currently {{ game['emojis'][ game['turn']]}}'s turn</h1>
+	  <br> 
+	</div>
+	<button onclick="submitCheckers()"> Submit </button>
+	
+	<script type="text/javascript">
       function submitCheckers() {
         document.getElementById("checkerform").submit();
       }
@@ -52,6 +64,5 @@
         }
       }
     </script>
-    <button onclick="submitCheckers()"> Submit </button>
   </div>
 {% endblock %}

@@ -14,7 +14,13 @@ table {
 td {
   width: calc(40vw / 8);
   height: calc(40vw / 8);
-  font-size: calc(40vw / 16);
+}
+
+.nocrown {
+  font-size: calc(40vw / 16);	
+}
+.withcrown {
+  font-size: calc(40vw / 24);		
 }
 
 tr:nth-child(even) td:nth-child(even),
