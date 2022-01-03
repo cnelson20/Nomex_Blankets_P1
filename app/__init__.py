@@ -10,10 +10,14 @@ app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
 # get APOD
+key = ''
+with open ('key_nasa.txt') as file:
+    key = file.readline()
+
 http = urllib3.PoolManager()
 if (not os.path.exists("static/images/APOD.jpg")) or int(os.path.getmtime("static/images/APOD.jpg") / 86400) < int(time.time() / 86400):
     r = http.request(
-        'GET', 'https://api.nasa.gov/planetary/apod?api_key=PxL3Eff2wvlbpZ9B6gF6Z1ORyovxbYCMdarvELIz')
+        'GET', 'https://api.nasa.gov/planetary/apod?api_key=' + key)
     imgurl = json.loads(r.data.decode('utf-8')).get("hdurl")
     i = open("static/images/APOD.jpg", "wb")
     i.write(http.request('GET', imgurl).data)
@@ -75,8 +79,14 @@ def play():
                 print(str(r.__dict__))
             checkers.set_emojis(session, e1, e2)
         if request.method == 'GET':
+            db = sqlite3.connect(MAIN_DB)
+            c = db.cursor()
+            # Obtaining data from database
+            c.execute("""SELECT pfp FROM users WHERE username = ?;""",
+                  (session.get("username"),))
+            profile = c.fetchone()[0]
             print(*session['game']['board'], sep="\n")
-            return render_template("play.html", user=session.get('username'), game=session['game'], turn=session['game']['turn']+1)
+            return render_template("play.html", user=session.get('username'), game=session['game'], turn=session['game']['turn']+1, pfp=profile)
         else:  # POST
             print(str(request.form))
             if 'pieces[]' in request.form:

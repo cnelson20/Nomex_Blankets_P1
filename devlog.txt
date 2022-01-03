@@ -126,8 +126,13 @@ Properly center table
 Make table cells always square
 Auto-resize emoji and check-box
 
+kevinC -- 2021-01-03 09:09
+
+Add profile picture to left side of play page
+
 cameronN -- 2022-01-03 9:30
 
 Fix crash in game
 King pieces now have crown
 Error message on illegal moves
+

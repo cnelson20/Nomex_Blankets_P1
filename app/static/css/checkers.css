@@ -41,3 +41,7 @@ input {
   width: calc(40vw / 64);
   height: calc(40vw / 64);
 }
+
+img {
+  max-width: 25vw;
+}
