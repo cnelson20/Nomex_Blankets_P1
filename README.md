@@ -7,7 +7,7 @@ Kevin   - HTML/Jinja/CSS Frontend
 Checkers with some extra flare.
 * Must login to play
 * Turn based User vs User on the same device
-* Emojis used instead of default checker pieces.
+* Random emojis used as checkers pieces
 * Special checkers board background
 * Users get dog profile picture
 
