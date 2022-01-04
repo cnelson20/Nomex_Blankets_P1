@@ -170,7 +170,7 @@ def move(session,oldx,oldy,movex,movey):
         if game_turn == 1 or board[oldy][oldx] >= 3:
             if not session['game']['doublehop'] and ((movex == oldx - 1 and movey == oldy + 1) or (movex == oldx + 1 and movey == oldy + 1)) and board[movey][movex] == 0:
                 board[movey][movex] = board[oldy][oldx];
-                if (movey == 0 and board[movey][movex] <= 2):
+                if (movey == 7 and board[movey][movex] <= 2):
                     board[movey][movex] += 2
                 board[oldy][oldx] = 0;
                 session['game']['board'] = board;

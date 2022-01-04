@@ -104,6 +104,7 @@ def play():
                         session['game'] = moverval
                     else:
                         print(checkers.geterrorstring(moverval))
+                        return render_template("play.html", user=session.get('username'), game=session['game'], turn=session['game']['turn']+1, error=checkers.geterrorstring(moverval))
                 else:
                     moverval = checkers.move(
                         session, pieces[0][1], pieces[0][0], pieces[1][1], pieces[1][0])
@@ -111,6 +112,7 @@ def play():
                         session['game'] = moverval
                     else:
                         print(checkers.geterrorstring(moverval))
+                        return render_template("play.html", user=session.get('username'), game=session['game'], turn=session['game']['turn']+1, error=checkers.geterrorstring(moverval))
             return redirect("/play")
     return redirect("/")
 
