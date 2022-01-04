@@ -136,3 +136,6 @@ Fix crash in game
 King pieces now have crown
 Error message on illegal moves
 
+hanZ -- 2022-01-04 9:00
+
+Added keys directory and updated keys.
