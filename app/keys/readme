@@ -1,4 +1,2 @@
-An API key for the APOD api is needed for this project. An API key can be acquired from
-https://api.nasa.gov/. This key should then be put into the file key_nasa.txt in this directory.
-
-This key is needed so you can get your daily picture from NASA which will be used as the background for our checker board.
+key_nasa.txt:
+APOD api used to get daily picture as checkers board background
