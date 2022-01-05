@@ -12,9 +12,9 @@ Checkers with some extra flare.
 * Users get dog profile picture
 
 ## APIs Used
-* APOD - https://github.com/stuy-softdev/notes-and-code/blob/main/api_kb/411_on_APOD.md
-* DOG-API - https://github.com/stuy-softdev/notes-and-code/blob/main/api_kb/411_on_DogBreeds.md
-* Emojapi - https://github.com/stuy-softdev/notes-and-code/blob/main/api_kb/411_on_Emojapi.md
+* [APOD] (https://github.com/stuy-softdev/notes-and-code/blob/main/api_kb/411_on_APOD.md)
+* [DOG-API] (https://github.com/stuy-softdev/notes-and-code/blob/main/api_kb/411_on_DogBreeds.md)
+* [Emojapi] (https://github.com/stuy-softdev/notes-and-code/blob/main/api_kb/411_on_Emojapi.md)
 
 ## How to install and run our website:
 
