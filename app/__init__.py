@@ -7,22 +7,12 @@ import time
 import checkers  # another file
 
 app = Flask(__name__)
-app.secret_key = os.urandom(32)
+#app.secret_key = os.urandom(32)
 
 # get APOD
-key = ''
-with open ('keys/key_nasa.txt') as file:
-    key = file.readline()
-    
 http = urllib3.PoolManager()
-if (not os.path.exists("static/images/APOD.jpg")) or int(os.path.getmtime("static/images/APOD.jpg") / 86400) < int(time.time() / 86400):
-    r = http.request(
-        'GET', 'https://api.nasa.gov/planetary/apod?api_key=' + key)
-    imgurl = json.loads(r.data.decode('utf-8')).get("hdurl")
-    i = open("static/images/APOD.jpg", "wb")
-    i.write(http.request('GET', imgurl).data)
 
-MAIN_DB = "users.db"
+MAIN_DB = "/var/www/FlaskApp/app/users.db"
 
 # database
 db = sqlite3.connect(MAIN_DB)
@@ -34,7 +24,7 @@ CREATE TABLE IF NOT EXISTS users (
     ROWID       INTEGER PRIMARY KEY,
     username    TEXT    NOT NULL,
     hash        TEXT    NOT NULL,
-    pfp         TEXT   
+    pfp         TEXT
 );""")
 
 db.commit()
@@ -61,7 +51,7 @@ def index():
 # Play
 @app.route("/play", methods=['GET', 'POST'])
 def play():
-    if 'username' in session:
+    if True:
         if 'game' not in session:
             checkers.start_game(session)
             e1 = ""
@@ -79,12 +69,14 @@ def play():
                 print(str(r.__dict__))
             checkers.set_emojis(session, e1, e2)
         if request.method == 'GET':
-            db = sqlite3.connect(MAIN_DB)
-            c = db.cursor()
-            # Obtaining data from database
-            c.execute("""SELECT pfp FROM users WHERE username = ?;""",
+            profile = ""
+            if 'username' in session:
+                db = sqlite3.connect(MAIN_DB)
+                c = db.cursor()
+                # Obtaining data from database
+                c.execute("""SELECT pfp FROM users WHERE username = ?;""",
                   (session.get("username"),))
-            profile = c.fetchone()[0]
+                profile = c.fetchone()[0]
             print(*session['game']['board'], sep="\n")
             return render_template("play.html", user=session.get('username'), game=session['game'], turn=session['game']['turn']+1, pfp=profile)
         else:  # POST
@@ -116,6 +108,11 @@ def play():
             return redirect("/play")
     return redirect("/")
 
+# Reset game
+@app.route("/restart")
+def restart_game():
+    session.pop('game',default=None)
+    return redirect("/play");
 
 # Signup function
 @app.route("/signup", methods=['GET', 'POST'])
@@ -215,8 +212,8 @@ def login():
 # Logout function
 @app.route("/logout")
 def logout():
-    """ 
-        Logouts user 
+    """
+        Logouts user
     """
     session.pop('username', default=None)
     return redirect("/")
@@ -261,4 +258,4 @@ def newpfp():
 
 if __name__ == "__main__":
     app.debug = True
-    app.run()  # app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0') #, port=80)
