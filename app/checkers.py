@@ -25,14 +25,14 @@ def generate_board():
     return board;
 
 def start_game(session):
-    if (not 'username' in session) or 'game' in session:
+    if 'game' in session:
         return False;
     else:
         session['game'] = dict();
         session['game']['board'] = generate_board();
         session['game']['turn'] = 0;
         session['game']['emojis'] = ["🐘","🐊"];
-        session['game']['doublehop'] = False 
+        session['game']['doublehop'] = False
         # generate emojis
         return True;
 
@@ -46,8 +46,8 @@ def set_emojis(session,e1,e2):
     return False;
 
 def remove_game(session):
-    ''' 
-       delete a game 
+    '''
+       delete a game
     '''
     if 'game' in session:
         del session['game'];
@@ -58,8 +58,8 @@ def game_exists(session):
     return 'game' in session;
 
 def turns(session,doublehop,x,y):
-    ''' 
-        switch turns 
+    '''
+        switch turns
     '''
     if not doublehop:
         session['game']['doublehop'] = False
@@ -67,7 +67,7 @@ def turns(session,doublehop,x,y):
         return True
     #if doublehop is true
     board = session['game']['board']
-    if (session['game']['turn'] == 0 or board[y][x] >= 3) and y >= 2:   
+    if (session['game']['turn'] == 0 or board[y][x] >= 3) and y >= 2:
         if x >= 2 and board[y-2][x-2] == 0 and board[y-1][x-1] != 0 and board[y-1][x-1] != session['game']['turn'] % 2:
             session['game']['doublehop'] = True
             session['game']['doublehopxy'] = [x,y]
@@ -76,7 +76,7 @@ def turns(session,doublehop,x,y):
             session['game']['doublehop'] = True
             session['game']['doublehopxy'] = [x,y]
             return True
-            
+
     elif (session['game']['turn'] == 1 or board[y][x] >= 3) and y <= 5:
         if x >= 2 and board[y+2][x-2] == 0 and board[y+1][x-1] != 0 and board[y+1][x-1] != session['game']['turn'] % 2:
             session['game']['doublehop'] = True
@@ -86,7 +86,7 @@ def turns(session,doublehop,x,y):
             session['game']['doublehop'] = True
             session['game']['doublehopxy'] = [x,y]
             return True
-            
+
     session['game']['doublehop'] = False
     session['game']['turn'] = invert10(session['game']['turn'])
     return True
@@ -106,7 +106,7 @@ def geterrorstring(errno):
 
 def move(session,oldx,oldy,movex,movey):
     '''
-       move piece 
+       move piece
     '''
     if True:
         print("[oldx: " + str(oldx) + " oldy: " + str(oldy) + "] [movex: " + str(movex) + " movey: " + str(movey) + "]");
@@ -116,16 +116,16 @@ def move(session,oldx,oldy,movex,movey):
         if (movey < 0 or movey > 7 or movex < 0 or movex > 7 or oldy < 0 or oldy > 7 or oldx < 0 or oldy > 7):
             #print("OOB")
             return 1
-            
+
         if (movey + movex) % 2 == 0:
             #print("Wrong squares")
             return 2
-            
+
         if session['game']['doublehop']:
             if oldx != session['game']['doublehopxy'][0] or oldy != session['game']['doublehopxy'][1]:
                 #print("Must doublehop!")
                 return 3
-        
+
         if (board[oldy][oldx] != 0 and board[oldy][oldx] % 2 == game_turn):
             ''' correct player continue checking things '''
             if (board[movey][movex] != 0 and board[movey][movex] % 2 == game_turn):
@@ -133,8 +133,8 @@ def move(session,oldx,oldy,movex,movey):
                 return 4 # if spot to move to is own team fail.
         else:
             #print("Not your piece!")
-            return 5        
-        
+            return 5
+
         # Player 2's pieces or kings
         if game_turn == 0 or board[oldy][oldx] >= 3:
             if not session['game']['doublehop'] and ((movex == oldx - 1 and movey == oldy - 1) or (movex == oldx + 1 and movey == oldy - 1)) and board[movey][movex] == 0:
@@ -236,4 +236,3 @@ if __name__ == "__main__":
                 first = True
                 print("Invalid Move");
         # clear_unused();
-    
